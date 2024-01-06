@@ -1,8 +1,8 @@
 import { auth } from "@/firebase";
 import styles from "@/styles/home.module.scss";
 import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
 } from "firebase/auth";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
@@ -11,133 +11,133 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Layout } from "./components/Layout";
 export default function Home() {
-  const [email, setEmail] = useState("");
-  const [passwordOne, setPasswordOne] = useState("");
-  const [passwordTwo, setPasswordTwo] = useState("");
-  const router = useRouter();
-  const [error, setError] = useState("");
-  const [isRegister, setIsRegister] = useState(true);
-  const showNotification = (message: string) => {
-    toast.error(message, {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "colored",
-    });
-  };
-  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (passwordOne === passwordTwo) {
-      createUserWithEmailAndPassword(auth, email, passwordOne)
-        .then((authUser) => {
-          console.log("Success. The user is created in Firebase");
-          router.push("/logged_in");
-        })
-        .catch((error) => {
-          showNotification("Error al registrarte, intenta despues.");
+    const [email, setEmail] = useState("");
+    const [passwordOne, setPasswordOne] = useState("");
+    const [passwordTwo, setPasswordTwo] = useState("");
+    const router = useRouter();
+    const [error, setError] = useState("");
+    const [isRegister, setIsRegister] = useState(true);
+    const showNotification = (message: string) => {
+        toast.error(message, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
         });
-    } else {
-      showNotification("Las contraseñas no coinciden.");
-    }
-  };
-  const onLogin = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    try {
-      await signInWithEmailAndPassword(auth, email, passwordOne);
-      router.push("lockers");
-    } catch (error: any) {
-      console.log(error);
-      showNotification("Error al hacer login.");
-    }
-  };
-  return (
-    <Layout
-      pageDescription="Home - Lockers"
-      pageKeywords="Lockers Dagpacket"
-      title="Homer - Dagpacket lockers"
-    >
-      <div className={styles.home}>
-        <Card style={{ width: "18rem" }}>
-          <Card.Body>
-            <Card.Title>Autenticación</Card.Title>
-            {isRegister ? (
-              <Form onSubmit={onSubmit}>
-                <Form.Group className="mb-3" controlId="register.email">
-                  <Form.Label>Correo electronico</Form.Label>
-                  <Form.Control
-                    type="email"
-                    placeholder="name@example.com"
-                    value={email}
-                    onChange={(event) => setEmail(event.target.value)}
-                  />
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="register.password">
-                  <Form.Label>Contraseña</Form.Label>
-                  <Form.Control
-                    type="password"
-                    value={passwordOne}
-                    onChange={(event) => setPasswordOne(event.target.value)}
-                  />
-                </Form.Group>
+    };
+    const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        if (passwordOne === passwordTwo) {
+            createUserWithEmailAndPassword(auth, email, passwordOne)
+                .then((authUser) => {
+                    console.log("Success. The user is created in Firebase");
+                    router.push("/logged_in");
+                })
+                .catch((error) => {
+                    showNotification("Error al registrarte, intenta despues.");
+                });
+        } else {
+            showNotification("Las contraseñas no coinciden.");
+        }
+    };
+    const onLogin = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        try {
+            await signInWithEmailAndPassword(auth, email, passwordOne);
+            router.push("lockers");
+        } catch (error: any) {
+            console.log(error);
+            showNotification("Error al hacer login.");
+        }
+    };
+    return (
+        <Layout
+            pageDescription="Home - Lockers"
+            pageKeywords="Lockers Dagpacket"
+            title="Homer - Dagpacket lockers"
+        >
+            <div className={styles.home}>
+                <Card style={{ width: "18rem" }}>
+                    <Card.Body>
+                        <Card.Title>Autenticación</Card.Title>
+                        {isRegister ? (
+                            <Form onSubmit={onSubmit}>
+                                <Form.Group className="mb-3" controlId="register.email">
+                                    <Form.Label>Correo electronico</Form.Label>
+                                    <Form.Control
+                                        type="email"
+                                        placeholder="name@example.com"
+                                        value={email}
+                                        onChange={(event) => setEmail(event.target.value)}
+                                    />
+                                </Form.Group>
+                                <Form.Group className="mb-3" controlId="register.password">
+                                    <Form.Label>Contraseña</Form.Label>
+                                    <Form.Control
+                                        type="password"
+                                        value={passwordOne}
+                                        onChange={(event) => setPasswordOne(event.target.value)}
+                                    />
+                                </Form.Group>
 
-                <Form.Group
-                  className="mb-3"
-                  controlId="register.password_confirmation"
-                >
-                  <Form.Label>Contraseña confirmación</Form.Label>
-                  <Form.Control
-                    type="password"
-                    value={passwordOne}
-                    onChange={(event) => setPasswordTwo(event.target.value)}
-                  />
-                </Form.Group>
+                                <Form.Group
+                                    className="mb-3"
+                                    controlId="register.password_confirmation"
+                                >
+                                    <Form.Label>Contraseña confirmación</Form.Label>
+                                    <Form.Control
+                                        type="password"
+                                        value={passwordOne}
+                                        onChange={(event) => setPasswordTwo(event.target.value)}
+                                    />
+                                </Form.Group>
 
-                <div className="d-flex justify-content-center">
-                  <Button type="submit">Registrase</Button>
-                </div>
-              </Form>
-            ) : (
-              <Form onSubmit={onLogin}>
-                <Form.Group className="mb-3" controlId="register.email">
-                  <Form.Label>Correo electronico</Form.Label>
-                  <Form.Control
-                    type="email"
-                    placeholder="name@example.com"
-                    value={email}
-                    onChange={(event) => setEmail(event.target.value)}
-                  />
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="register.password">
-                  <Form.Label>Contraseña</Form.Label>
-                  <Form.Control
-                    type="password"
-                    value={passwordOne}
-                    onChange={(event) => setPasswordOne(event.target.value)}
-                  />
-                </Form.Group>
-                <div className={styles.center}>
-                  <Button type="submit" >Ingresar</Button>
-                </div>
-              </Form>
-            )}
+                                <div className="d-flex justify-content-center">
+                                    <Button type="submit">Registrase</Button>
+                                </div>
+                            </Form>
+                        ) : (
+                            <Form onSubmit={onLogin}>
+                                <Form.Group className="mb-3" controlId="register.email">
+                                    <Form.Label>Correo electronico</Form.Label>
+                                    <Form.Control
+                                        type="email"
+                                        placeholder="name@example.com"
+                                        value={email}
+                                        onChange={(event) => setEmail(event.target.value)}
+                                    />
+                                </Form.Group>
+                                <Form.Group className="mb-3" controlId="register.password">
+                                    <Form.Label>Contraseña</Form.Label>
+                                    <Form.Control
+                                        type="password"
+                                        value={passwordOne}
+                                        onChange={(event) => setPasswordOne(event.target.value)}
+                                    />
+                                </Form.Group>
+                                <div className={styles.center}>
+                                    <Button type="submit" >Ingresar</Button>
+                                </div>
+                            </Form>
+                        )}
 
-            <Button
-              type="submit"
-              onClick={() => setIsRegister(!isRegister)}
-              className={styles.button}
-            >
-              {
-                isRegister ? ('Ir a Login') : ('Ir aRegistrarse')
-              }
-            </Button>
-          </Card.Body>
-        </Card>
-        <ToastContainer />
-      </div>
-    </Layout>
-  );
+                        <Button
+                            type="submit"
+                            onClick={() => setIsRegister(!isRegister)}
+                            className={styles.button}
+                        >
+                            {
+                                isRegister ? ('Ir a Login') : ('Ir aRegistrarse')
+                            }
+                        </Button>
+                    </Card.Body>
+                </Card>
+                <ToastContainer />
+            </div>
+        </Layout>
+    );
 }
