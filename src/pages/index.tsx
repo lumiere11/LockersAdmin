@@ -10,6 +10,7 @@ import { Button, Card, Form } from "react-bootstrap";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Layout } from "./components/Layout";
+import { signIn } from "next-auth/react";
 export default function Home() {
     const [email, setEmail] = useState("");
     const [passwordOne, setPasswordOne] = useState("");
@@ -17,6 +18,7 @@ export default function Home() {
     const router = useRouter();
     const [error, setError] = useState("");
     const [isRegister, setIsRegister] = useState(true);
+
     const showNotification = (message: string) => {
         toast.error(message, {
             position: "top-right",
@@ -29,26 +31,20 @@ export default function Home() {
             theme: "colored",
         });
     };
-    const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        if (passwordOne === passwordTwo) {
-            createUserWithEmailAndPassword(auth, email, passwordOne)
-                .then((authUser) => {
-                    console.log("Success. The user is created in Firebase");
-                    router.push("/logged_in");
-                })
-                .catch((error) => {
-                    showNotification("Error al registrarte, intenta despues.");
-                });
-        } else {
-            showNotification("Las contraseñas no coinciden.");
-        }
+
+    const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        // event.preventDefault();
+        // if (passwordOne === passwordTwo) {
+        //     await createUserWithEmailAndPassword(auth, email, passwordOne);
+        //     router.push('/dashboard');
+        // } else {
+        //     showNotification("Las contraseñas no coinciden.");
+        // }
     };
     const onLogin = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         try {
-            await signInWithEmailAndPassword(auth, email, passwordOne);
-            router.push("lockers");
+            await signIn('credentials', {email, password : passwordOne, redirect: true, callbackUrl: '/dashboard'})
         } catch (error: any) {
             console.log(error);
             showNotification("Error al hacer login.");
@@ -91,7 +87,7 @@ export default function Home() {
                                     <Form.Label>Contraseña confirmación</Form.Label>
                                     <Form.Control
                                         type="password"
-                                        value={passwordOne}
+                                        value={passwordTwo}
                                         onChange={(event) => setPasswordTwo(event.target.value)}
                                     />
                                 </Form.Group>

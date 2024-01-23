@@ -1,22 +1,24 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
+import { initializeApp, FirebaseApp, getApps, getApp } from "firebase/app";
+import { getFirestore, Firestore } from "firebase/firestore";
+import { getAuth, Auth } from "firebase/auth";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyAcJMidUXwpqhyUXO4P5QPKbF3PcLrqbvc",
-  authDomain: "laravel-86a61.firebaseapp.com",
-  databaseURL: "https://laravel-86a61-default-rtdb.firebaseio.com",
-  projectId: "laravel-86a61",
-  storageBucket: "laravel-86a61.appspot.com",
-  messagingSenderId: "325634781462",
-  appId: "1:325634781462:web:3721ac0371d9b935a4a037"
+  apiKey: "AIzaSyBYY2zLOaO0RWHUWQ7U1OQYOJbk9CB6vTg",
+  authDomain: "dagpacket-plataforma.firebaseapp.com",
+  databaseURL: "https://dagpacket-plataforma-default-rtdb.firebaseio.com",
+  projectId: "dagpacket-plataforma",
+  storageBucket: "dagpacket-plataforma.appspot.com",
+  messagingSenderId: "628490033893",
+  appId: "1:628490033893:web:79f6ec5ff811f54235d20c",
+  measurementId: "G-Q5CY6K4Q92"
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-// Initialize Firebase Authentication and get a reference to the service
-export const auth = getAuth(app);
-export default app;
+const app = getApps().length ? getApp() : initializeApp(firebaseConfig)
+const auth = getAuth()
+const db: Firestore = getFirestore(app);
+
+export {app, auth, db}
