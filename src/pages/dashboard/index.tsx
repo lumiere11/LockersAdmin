@@ -14,22 +14,12 @@ import { setUser } from '@/features/userSlice'
 import { setLocker } from '@/features/lockerSlice'
 import { getCotizaciones } from '@/services/CotizacionesService'
 import { getUbicacionLocker } from '@/services/LockerService'
+import { Locker } from '@/types/Locker'
 
-const meses = [
-    'Enero', 'Febrero', 'Marzo', 'Abril',
-    'Mayo', 'Junio', 'Julio', 'Agosto',
-    'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
-];
-interface Lockers {
-
-    nombre: string;
-    gananciaGlobal: number;
-    gananciaTotal: number;
-
-}
 export default function Dashboard() {
-    const [lockers, setLockers] = useState<Array<Lockers>>([] as Array<Lockers>)
+    const [lockers, setLockers] = useState<Locker[]>([] as Locker[])
     const [isMain, setIsMain] = useState(true)
+    const [selectedLocker, setSelectedLocker] = useState("")
     const router = useRouter();
     const dispatch = useDispatch();
 
@@ -42,11 +32,16 @@ export default function Dashboard() {
     useEffect(() => {
 
     }, [session.status])
-    const handleLockerSelect = (isMain: boolean) => {
+    const handleLockerSelect = (isMain: boolean, lockerId: string) => {
         setIsMain(isMain)
+        setSelectedLocker(lockerId)
+    }
+    const lockerSelect = (isMain: boolean) => {
+        setIsMain(isMain)
+
     }
     const getLocker = async () => {
-        const q = query(collection(db, 'users_lockers'), where('user_id', '==', session.data.uid));
+        const q = query(collection(db, 'users_lockers'), where('user_id', '==', session?.data?.uid));
         const querySnapshot = await getDocs(q);
         const dataArray: DocumentData[] = [];
         querySnapshot.forEach((doc) => {
@@ -61,7 +56,7 @@ export default function Dashboard() {
 
     }
     console.log(session)
-    const getUserData = async() => {
+    const getUserData = async () => {
         const userRef = doc(db, "user2_lockers", session?.data?.uid);
         const docSnap = await getDoc(userRef);
         const userName = docSnap.exists() ? docSnap.data().name : "Sin Nombre"
@@ -76,20 +71,21 @@ export default function Dashboard() {
             let lockerTotalEarnings = 0;
             lockersData?.forEach(async (item) => {
                 const totalCost = await getCotizaciones(item.locker_id);
-                
+
                 const globalEarnings = parseFloat(totalCost.toFixed(2));
                 const total = globalEarnings * .40
                 lockerTotalEarnings += parseFloat(total.toFixed());
                 const lockerData = await getUbicacionLocker(item.locker_id);
                 const lockerObkj = {
-                    nombre: lockerData?.name ? lockerData?.name  : 'Sin nombre',
+                    nombre: lockerData?.name ? lockerData?.name : 'Sin nombre',
                     gananciaGlobal: globalEarnings,
-                    gananciaTotal: parseFloat(total.toFixed())
+                    gananciaTotal: parseFloat(total.toFixed()),
+                    lockerId: item.locker_id
                 }
                 setLockers([...lockers, lockerObkj]);
             })
             dispatch(setUser({
-                uid: session?.data?.uid, 
+                uid: session?.data?.uid,
                 name: await getUserData()
             }))
             dispatch(setLocker({
@@ -104,7 +100,7 @@ export default function Dashboard() {
 
 
     useEffect(() => {
-        if(session.status === 'authenticated'){
+        if (session.status === 'authenticated') {
 
             getLocker();
             getSumOfCosts();
@@ -123,7 +119,7 @@ export default function Dashboard() {
 
                         <PanelInfoLockers lockers={lockers} lockerSelect={handleLockerSelect} />
                     ) : (
-                        <PanelInfoLockersDetalles lockers={lockers} lockerSelect={handleLockerSelect} />
+                        <PanelInfoLockersDetalles lockerId={selectedLocker} lockerSelect={lockerSelect} />
                     )
                 }
             </Container>) : (<p>Loading</p>)}
