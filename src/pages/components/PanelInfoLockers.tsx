@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Col, Form, Row } from 'react-bootstrap'
+import { Card, Col } from 'react-bootstrap'
 import styles from '@/styles/dashboard.module.scss'
 import PanelInfoLockersWrapper from './PanelInfoLockersWrapper';
 

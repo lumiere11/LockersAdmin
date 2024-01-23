@@ -1,6 +1,8 @@
 import React, { ReactNode } from 'react'
 import { Card, Col, Form, Row } from 'react-bootstrap'
 import styles from '@/styles/dashboard.module.scss'
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
 
 const meses = [
     'Enero', 'Febrero', 'Marzo', 'Abril',
@@ -10,7 +12,21 @@ const meses = [
 interface Props {
     children: ReactNode
 }
+import { RootState } from '../../store';
+import { useSelector } from 'react-redux';
+
 const PanelInfoLockersWrapper : React.FC<Props> = ({children}) => {
+    const router = useRouter();
+    const user = useSelector((state: RootState) => state.user);
+    const locker = useSelector((state: RootState) => state.locker);
+
+    const session = useSession({
+        required: true,
+        onUnauthenticated() {
+            router.push('/')
+        },
+    });
+
     return (
         <Row>
             <Col xs="2" md="3">
@@ -18,8 +34,8 @@ const PanelInfoLockersWrapper : React.FC<Props> = ({children}) => {
                     Historial
                 </p>
                 <div>
-                    <Form.Select aria-label="Selector">
-                        <option selected>Seleccione periodo</option>
+                    <Form.Select aria-label="Selector" defaultValue={"default"} >
+                        <option  value={"default"}>Seleccione periodo</option>
                         {meses.map((item, index) => (
                             <option value={index + 1} key={index}>{item}</option>
                         ))}
@@ -29,8 +45,8 @@ const PanelInfoLockersWrapper : React.FC<Props> = ({children}) => {
             <Col xs="9" md="9">
                 <p className={`d-flex  align-items-center justify-content-center ${styles.title}`}>Dashboard inversionistas VIP (Multilocker)</p>
                 <div className="d-flex justify-content-evenly">
-                    <p className={styles.name}>Juan Perez Sanchez</p>
-                    <p className={styles.lockers_number}>#10</p>
+                    <p className={styles.name}>{user.name}</p>
+                    <p className={styles.lockers_number}>#{locker.number}</p>
                 </div>
                 <div className="d-flex justify-content-center">
                     <p className={styles.period}>Periodo del 01 al 20 2023</p>
@@ -49,7 +65,7 @@ const PanelInfoLockersWrapper : React.FC<Props> = ({children}) => {
                                 <Card className='h-100'>
                                     <Card.Body className='d-flex justify-content-center align-items-center  flex-column h-100'>
                                         <p>Mi utilidad por mis lockers</p>
-                                        <p>$ 10000</p>
+                                        <p>$ {locker.total}</p>
                                     </Card.Body>
                                 </Card>
                             </Col>

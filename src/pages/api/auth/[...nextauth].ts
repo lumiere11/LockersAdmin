@@ -14,14 +14,15 @@ export const authOptions = {
           //   update token if user is returned
           if (user) {
             token.uid= user.uid;
-    
+            token.name = user.displayName;
           }
           //   return final_token
           return token;
         },
         async session({ session, token}) {
           //  update session from token
-          session.uid= token.uid;
+          session.uid= token.uid
+          session.name = token.displayName;
           return session;
         },
       },
@@ -32,9 +33,9 @@ export const authOptions = {
             async authorize(credentials: any): Promise<any> {
                 return await signInWithEmailAndPassword(auth, (credentials as any).email || '', (credentials as any).password || '')
                     .then(userCredential => {
-                        console.log(userCredential.user)
+                        console.log(userCredential)
                         if (userCredential.user) {
-                            return { uid: userCredential.user.uid, email: userCredential.user.email };
+                            return userCredential.user;
                         }
                         return null;
                     })

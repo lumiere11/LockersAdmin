@@ -1,8 +1,7 @@
-import { auth } from "@/firebase";
+import { auth, db } from "@/firebase";
 import styles from "@/styles/home.module.scss";
 import {
     createUserWithEmailAndPassword,
-    signInWithEmailAndPassword,
 } from "firebase/auth";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
@@ -11,10 +10,12 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Layout } from "./components/Layout";
 import { signIn } from "next-auth/react";
+import { doc, setDoc } from "firebase/firestore";
 export default function Home() {
     const [email, setEmail] = useState("");
     const [passwordOne, setPasswordOne] = useState("");
     const [passwordTwo, setPasswordTwo] = useState("");
+    const [name, setName] = useState("")
     const router = useRouter();
     const [error, setError] = useState("");
     const [isRegister, setIsRegister] = useState(true);
@@ -33,18 +34,22 @@ export default function Home() {
     };
 
     const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-        // event.preventDefault();
-        // if (passwordOne === passwordTwo) {
-        //     await createUserWithEmailAndPassword(auth, email, passwordOne);
-        //     router.push('/dashboard');
-        // } else {
-        //     showNotification("Las contraseñas no coinciden.");
-        // }
+        event.preventDefault();
+        if (passwordOne === passwordTwo) {
+            const userCredential = await createUserWithEmailAndPassword(auth, email, passwordOne);
+            const user = userCredential.user;
+            await setDoc(doc(db, "user2_lockers", user.uid), {
+                name: name,
+            });
+            router.push('/dashboard');
+        } else {
+            showNotification("Las contraseñas no coinciden.");
+        }
     };
     const onLogin = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         try {
-            await signIn('credentials', {email, password : passwordOne, redirect: true, callbackUrl: '/dashboard'})
+             await signIn('credentials', { email, password: passwordOne, redirect: true, callbackUrl: '/dashboard' })
         } catch (error: any) {
             console.log(error);
             showNotification("Error al hacer login.");
@@ -69,6 +74,14 @@ export default function Home() {
                                         placeholder="name@example.com"
                                         value={email}
                                         onChange={(event) => setEmail(event.target.value)}
+                                    />
+                                </Form.Group>
+                                <Form.Group className="mb-3" controlId="register.name">
+                                    <Form.Label>Nombre</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        value={name}
+                                        onChange={(event) => setName(event.target.value)}
                                     />
                                 </Form.Group>
                                 <Form.Group className="mb-3" controlId="register.password">
