@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 
 export interface PanelInfoLockersDetalles{
-    lockerId: string
+    seelectedLocker: string
     lockerSelect: (isMain: boolean) => void
 }

@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react'
-import { Card, Col, Form, Row } from 'react-bootstrap'
+import { Col, Form, Row } from 'react-bootstrap'
 import styles from '@/styles/dashboard.module.scss'
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
@@ -14,19 +14,27 @@ interface Props {
 }
 import { RootState } from '../../store';
 import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { setDate } from '@/features/dateSlice';
 
-const PanelInfoLockersWrapper : React.FC<Props> = ({children}) => {
+const PanelInfoLockersWrapper: React.FC<Props> = ({ children }) => {
     const router = useRouter();
     const user = useSelector((state: RootState) => state.user);
     const locker = useSelector((state: RootState) => state.locker);
-
+    const dispatch = useDispatch();
     const session = useSession({
         required: true,
         onUnauthenticated() {
             router.push('/')
         },
     });
+    const date = useSelector((state: RootState) => state.date)
+    const selectMonth = (e: React.ChangeEvent<HTMLSelectElement>) => {
 
+        dispatch(setDate({
+            month: parseInt(e.target.value)
+        }));
+    }
     return (
         <Row>
             <Col xs="2" md="3">
@@ -34,8 +42,8 @@ const PanelInfoLockersWrapper : React.FC<Props> = ({children}) => {
                     Historial
                 </p>
                 <div>
-                    <Form.Select aria-label="Selector" defaultValue={"default"} >
-                        <option  value={"default"}>Seleccione periodo</option>
+                    <Form.Select aria-label="Selector" defaultValue={date.month} onChange={() => selectMonth}>
+                        <option value={"default"}>Seleccione periodo</option>
                         {meses.map((item, index) => (
                             <option value={index + 1} key={index}>{item}</option>
                         ))}
@@ -51,27 +59,7 @@ const PanelInfoLockersWrapper : React.FC<Props> = ({children}) => {
                 <div className="d-flex justify-content-center">
                     <p className={styles.period}>Periodo del 01 al 20 2023</p>
                 </div>
-                <Card >
-                    <Card.Body>
-                        <Row>
-                            <Col xs="8" md="8">
-                                <Row>
-                                    {children}
-                                </Row>
-
-                            </Col>
-
-                            <Col xs="4" md="4">
-                                <Card className='h-100'>
-                                    <Card.Body className='d-flex justify-content-center align-items-center  flex-column h-100'>
-                                        <p>Mi utilidad por mis lockers</p>
-                                        <p>$ {locker.total}</p>
-                                    </Card.Body>
-                                </Card>
-                            </Col>
-                        </Row>
-                    </Card.Body>
-                </Card>
+                {children}
             </Col>
 
         </Row>

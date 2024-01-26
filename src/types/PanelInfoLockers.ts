@@ -1,7 +1,14 @@
 /* eslint-disable no-unused-vars */
-import { Locker } from "./Locker"
 
 export interface PanelInfoLockers{
-    lockers: Array<Locker>
+    earnings: LockerEarnings[],
     lockerSelect: (isMain: boolean, lockerId: string) => void
+    totalLockersEarnings: number
+}
+
+export interface LockerEarnings {
+    name: string,
+    globalEarnings: number,
+    licenciatarioEarnings: number,
+    lockerId: string,
 }

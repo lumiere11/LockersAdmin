@@ -51,7 +51,6 @@ export default function Home() {
         try {
              await signIn('credentials', { email, password: passwordOne, redirect: true, callbackUrl: '/dashboard' })
         } catch (error: any) {
-            console.log(error);
             showNotification("Error al hacer login.");
         }
     };

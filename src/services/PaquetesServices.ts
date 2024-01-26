@@ -1,12 +1,12 @@
 import { db } from "@/firebase";
 import { DocumentData, collection, getDocs, query, where } from "firebase/firestore";
 
-export const getServiciosRecargas = async (lockerId: string,  firstDay: Date, lastDay: Date) => {
+export const getPacketsEarnings = async(lockerId: string, firstDay:Date, lastDay:Date) =>{
     const q = query(
-        collection(db, 'servicioRecarga'),
+        collection(db, 'cotizaciones'), 
         where('lockerId', '==', lockerId),
-        where('status', '==', "PAGADO"),
-        where('created_at', '>=', firstDay),
+        where('state', '==', "PAGADO"),
+        where('created_at', '>=', firstDay), 
         where('created_at', '<=', lastDay)
     );
     const querySnapshot = await getDocs(q);
@@ -16,7 +16,7 @@ export const getServiciosRecargas = async (lockerId: string,  firstDay: Date, la
         dataArray.push(data);
     });
     if (!dataArray) {
-        return null;
+        return [];
     }
 
     return dataArray;

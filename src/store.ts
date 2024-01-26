@@ -2,11 +2,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import userReducer from './features/userSlice';
 import lockerReducer from './features/lockerSlice';
+import dateReducer from './features/dateSlice';
 
 export const store = configureStore({
   reducer: {
     user: userReducer,
-    locker: lockerReducer
+    locker: lockerReducer,
+    date: dateReducer,
   },
 });
 

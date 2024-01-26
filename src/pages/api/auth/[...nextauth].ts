@@ -33,7 +33,6 @@ export const authOptions = {
             async authorize(credentials: any): Promise<any> {
                 return await signInWithEmailAndPassword(auth, (credentials as any).email || '', (credentials as any).password || '')
                     .then(userCredential => {
-                        console.log(userCredential)
                         if (userCredential.user) {
                             return userCredential.user;
                         }
@@ -43,7 +42,6 @@ export const authOptions = {
                     .catch((error) => {
                         const errorCode = error.code;
                         const errorMessage = error.message;
-                        console.log(error);
                     });
             }
         })
