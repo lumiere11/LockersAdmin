@@ -10,7 +10,7 @@ interface Props {
 	Private?: boolean;
 }
 export const Layout = (
-	{ title, children, pageDescription, pageKeywords, Private }: Props,
+	{ title, children, pageDescription, pageKeywords }: Props,
 ) => {
 	return (
 		<>

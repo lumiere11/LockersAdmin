@@ -2,7 +2,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 // Initial state
-const initialState: LockerState = {
+const initialState: {number: number, total: number} = {
     number: 0,
     total: 0
 };

@@ -19,7 +19,11 @@
         "unused-imports"
     ],
     "rules": {
-        "no-unused-vars": "warn",
-        "unused-imports/no-unused-imports": "warn"
+        "no-unused-vars": "off",
+        "unused-imports/no-unused-imports": "off",
+        "react/no-unescaped-entities": "off",
+        "@next/next/no-page-custom-font": "off"    ,
+        "react/react-in-jsx-scope": "off",
+        "react/jsx-uses-react": "off"
     }
 }

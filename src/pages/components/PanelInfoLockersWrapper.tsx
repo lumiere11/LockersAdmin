@@ -5,15 +5,11 @@ import styles from "@/styles/dashboard.module.scss";
 interface Props {
   children: ReactNode;
 }
-import { RootState } from "../../store";
-import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { setDate } from "@/features/dateSlice";
 import moment from 'moment';
 
 const PanelInfoLockersWrapper: React.FC<Props> = ({ children }) => {
-  const user = useSelector((state: RootState) => state.user);
-  const locker = useSelector((state: RootState) => state.locker);
   const [startDate, setStartDate] = useState(moment().startOf('month').format('YYYY-MM-DD'));
   const [endDate, setEndDate] = useState(moment().startOf('month').format('YYYY-MM-DD'));
   const dispatch = useDispatch();

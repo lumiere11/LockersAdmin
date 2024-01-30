@@ -18,7 +18,6 @@ import { ServiciosYRecargas } from "@/types/ServiciosYRecargas";
 import { Paquete } from "@/types/Paquetes";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
-import { auth } from "@/firebase";
 
 export default function Dashboard() {
   const [isMain, setIsMain] = useState(true);
@@ -99,7 +98,6 @@ export default function Dashboard() {
         date.dateEnd
       );
       if (data) {
-        debugger;
         const { totalDagpacket, totalLicenciatario } = packetLogic(data);
         return {
           totalDagpacket: totalDagpacket ? totalDagpacket : 0,
@@ -116,7 +114,6 @@ export default function Dashboard() {
   const sumEarnings = async () => {
     try {
       const lockers = await getLockers();
-      debugger;
       if (lockers === null || lockers === undefined) {
         throw new Error("Error al traer los lockers");
         return;
@@ -180,7 +177,6 @@ export default function Dashboard() {
           recargasLicenciatarioEarnings +
           serviciosLicenciatarioEarnings +
           totalLicenciatario;
-        debugger;
         setTotalEarnings(totalEarnings2);
         setEarnings([
           {

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { auth, db } from "@/firebase";
 import styles from "@/styles/home.module.scss";
 import {
@@ -17,7 +18,6 @@ export default function Home() {
     const [passwordTwo, setPasswordTwo] = useState("");
     const [name, setName] = useState("")
     const router = useRouter();
-    const [error, setError] = useState("");
     const [isRegister, setIsRegister] = useState(true);
 
     const showNotification = (message: string) => {

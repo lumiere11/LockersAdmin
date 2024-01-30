@@ -2,9 +2,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 // Initial state
-const initialState: UserState = {
-  uid: null,
-  name: null,
+const initialState: {uid: string | null, name: string | null, loading: boolean} = {
+  uid: '',
+  name: '',
   loading: false,
 };
 
