@@ -9,7 +9,7 @@ import React, { useState } from "react";
 import { Button, Card, Form } from "react-bootstrap";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Layout } from "./components/Layout";
+import { Layout } from "../components/Layout";
 import { signIn } from "next-auth/react";
 import { doc, setDoc } from "firebase/firestore";
 export default function Home() {
