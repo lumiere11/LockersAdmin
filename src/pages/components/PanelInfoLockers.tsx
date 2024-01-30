@@ -2,9 +2,9 @@ import React from 'react'
 import { Card, Col, Row } from 'react-bootstrap'
 import styles from '@/styles/dashboard.module.scss'
 import PanelInfoLockersWrapper from './PanelInfoLockersWrapper';
-import { PanelInfoLockers } from '@/types/PanelInfoLockers';
+import { PanelInfoLockers as IPanelInfoLockers} from '@/types/PanelInfoLockers';
 
-const PanelInfoLockers = ({ earnings,  totalLockersEarnings , lockerSelect }: PanelInfoLockers) => {
+const PanelInfoLockers = ({ earnings,  totalLockersEarnings , lockerSelect }: IPanelInfoLockers) => {
 
     return (
         <PanelInfoLockersWrapper>
@@ -16,7 +16,7 @@ const PanelInfoLockers = ({ earnings,  totalLockersEarnings , lockerSelect }: Pa
                                 {
                                     earnings.map((item, index) => (
                                         <>
-                                            <Col xs="4" md="4" className={`mb-4 cursor-pointer ${styles.locker}`} onClick={() => lockerSelect(false, item.lockerId)}>
+                                            <Col xs="6" md="6" className={`mb-4 cursor-pointer ${styles.locker}`} onClick={() => lockerSelect(false, item.lockerId)}>
                                                 <Card>
                                                     <Card.Body className='card-body d-flex  align-items-center justify-content-center flex-column'>
                                                         <p>Locker {index + 1}</p>
@@ -25,7 +25,7 @@ const PanelInfoLockers = ({ earnings,  totalLockersEarnings , lockerSelect }: Pa
                                                     </Card.Body>
                                                 </Card>
                                             </Col>
-                                            <Col xs="4" md="4" className='mb-4' >
+                                            {/* <Col xs="4" md="4" className='mb-4' >
 
                                                 <Card>
                                                     <Card.Body className='card-body d-flex  align-items-center justify-content-center flex-column'>
@@ -33,13 +33,13 @@ const PanelInfoLockers = ({ earnings,  totalLockersEarnings , lockerSelect }: Pa
                                                         <p>${item.globalEarnings}</p>
                                                     </Card.Body>
                                                 </Card>
-                                            </Col>
-                                            <Col xs="4" md="4" className='mb-4' >
+                                            </Col> */}
+                                            <Col xs="6" md="6" className='mb-4' >
 
                                                 <Card>
                                                     <Card.Body className='card-body d-flex  align-items-center justify-content-center flex-column'>
                                                         <p>Mi utilidad</p>
-                                                        <p>${item.licenciatarioEarnings} </p>
+                                                        <p>${item.licenciatarioEarnings.toFixed(4)} </p>
                                                     </Card.Body>
                                                 </Card>
                                             </Col>
@@ -52,7 +52,7 @@ const PanelInfoLockers = ({ earnings,  totalLockersEarnings , lockerSelect }: Pa
                             <Card className='h-100'>
                                 <Card.Body className='d-flex justify-content-center align-items-center  flex-column h-100'>
                                     <p>Mi utilidad por mis lockers</p>
-                                    <p>$ {totalLockersEarnings}</p>
+                                    <p>$ {totalLockersEarnings.toFixed(4)}</p>
                                 </Card.Body>
                             </Card>
                         </Col>

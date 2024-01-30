@@ -1,21 +1,28 @@
 // features/user/userSlice.ts
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import moment from 'moment';
 
 // Initial state
 const initialState: {
-    month: number
+  dateStart: string;
+  dateEnd: string;
 } = {
-    month: new Date().getMonth() + 1
+  dateStart: moment().startOf('month').format('YYYY-MM-DD'),
+  dateEnd: moment().endOf('month').format('YYYY-MM-DD'),
 };
 
 const dateSlice = createSlice({
-    name: 'date',
-    initialState,
-    reducers: {
-        setDate: (state, action: PayloadAction<{ month: number; }>) => {
-            state.month = action.payload.month;
-        },
+  name: "date",
+  initialState,
+  reducers: {
+    setDate: (
+      state,
+      action: PayloadAction<{ dateStart: string; dateEnd: string }>
+    ) => {
+      state.dateStart = action.payload.dateStart;
+      state.dateEnd = action.payload.dateEnd;
     },
+  },
 });
 
 // Export actions

@@ -14,7 +14,7 @@ const PanelInfoLockersDetalles = ({ lockerSelect, paquete, recargasYservicios }:
                         <Col xs="8" md="8">
                             <Row>
 
-                                <Col xs="4" md="4" className='mb-4' >
+                                <Col xs="6" md="6" className='mb-4' >
                                     <Card>
                                         <Card.Body className='card-body d-flex  align-items-center justify-content-center flex-column'>
                                             <p>Paquetes </p>
@@ -23,7 +23,7 @@ const PanelInfoLockersDetalles = ({ lockerSelect, paquete, recargasYservicios }:
                                         </Card.Body>
                                     </Card>
                                 </Col>
-                                <Col xs="4" md="4" className='mb-4' >
+                                {/* <Col xs="4" md="4" className='mb-4' >
 
                                     <Card>
                                         <Card.Body className='card-body d-flex  align-items-center justify-content-center flex-column'>
@@ -31,17 +31,17 @@ const PanelInfoLockersDetalles = ({ lockerSelect, paquete, recargasYservicios }:
                                             <p>${paquete.globalEarnings}</p>
                                         </Card.Body>
                                     </Card>
-                                </Col>
-                                <Col xs="4" md="4" className='mb-4' >
+                                </Col> */}
+                                <Col xs="6" md="6" className='mb-4' >
 
                                     <Card>
                                         <Card.Body className='card-body d-flex  align-items-center justify-content-center flex-column'>
                                             <p>Mi utilidad</p>
-                                            <p>${paquete.licenciatarioEarnings}</p>
+                                            <p>${paquete.licenciatarioEarnings.toFixed(4)}</p>
                                         </Card.Body>
                                     </Card>
                                 </Col>
-                                <Col xs="4" md="4" className='mb-4' >
+                                <Col xs="6" md="6" className='mb-4' >
 
                                     <Card>
                                         <Card.Body className='card-body d-flex  align-items-center justify-content-center flex-column'>
@@ -50,7 +50,7 @@ const PanelInfoLockersDetalles = ({ lockerSelect, paquete, recargasYservicios }:
                                         </Card.Body>
                                     </Card>
                                 </Col>
-                                <Col xs="4" md="4" className='mb-4' >
+                                {/* <Col xs="4" md="4" className='mb-4' >
 
                                     <Card>
                                         <Card.Body className='card-body d-flex  align-items-center justify-content-center flex-column'>
@@ -58,17 +58,17 @@ const PanelInfoLockersDetalles = ({ lockerSelect, paquete, recargasYservicios }:
                                             <p>${recargasYservicios.recargasGlobalEarnings + recargasYservicios.serviciosGlobalEarnings}</p>
                                         </Card.Body>
                                     </Card>
-                                </Col>
-                                <Col xs="4" md="4" className='mb-4' >
+                                </Col> */}
+                                <Col xs="6" md="6" className='mb-4' >
 
                                     <Card>
                                         <Card.Body className='card-body d-flex  align-items-center justify-content-center flex-column'>
                                             <p>Mi utilidad</p>
-                                            <p>${recargasYservicios.recargasLicenciatarioEarnings + recargasYservicios.serviciosLicenciatarioEarnings}</p>
+                                            <p>${(recargasYservicios.recargasLicenciatarioEarnings + recargasYservicios.serviciosLicenciatarioEarnings).toFixed(4)}</p>
                                         </Card.Body>
                                     </Card>
                                 </Col>
-                                <Col xs="4" md="4" className='mb-4' >
+                                <Col xs="6" md="6" className='mb-4' >
 
                                     <Card>
                                         <Card.Body className='card-body d-flex  align-items-center justify-content-center flex-column'>
@@ -77,7 +77,7 @@ const PanelInfoLockersDetalles = ({ lockerSelect, paquete, recargasYservicios }:
                                         </Card.Body>
                                     </Card>
                                 </Col>
-                                <Col xs="4" md="4" className='mb-4' >
+                                {/* <Col xs="4" md="4" className='mb-4' >
 
                                     <Card>
                                         <Card.Body className='card-body d-flex  align-items-center justify-content-center flex-column'>
@@ -85,8 +85,8 @@ const PanelInfoLockersDetalles = ({ lockerSelect, paquete, recargasYservicios }:
                                             <p>0</p>
                                         </Card.Body>
                                     </Card>
-                                </Col>
-                                <Col xs="4" md="4" className='mb-4' >
+                                </Col> */}
+                                <Col xs="6" md="6" className='mb-4' >
 
                                     <Card>
                                         <Card.Body className='card-body d-flex  align-items-center justify-content-center flex-column'>
@@ -95,7 +95,7 @@ const PanelInfoLockersDetalles = ({ lockerSelect, paquete, recargasYservicios }:
                                         </Card.Body>
                                     </Card>
                                 </Col>
-                                <Col xs="4" md="4" className='mb-4'  >
+                                <Col xs="6" md="6" className='mb-4'  >
 
                                     <Card style={{ height: '8rem' }} >
                                         <Card.Body className='card-body d-flex  align-items-center justify-content-center flex-column'>
@@ -104,7 +104,7 @@ const PanelInfoLockersDetalles = ({ lockerSelect, paquete, recargasYservicios }:
                                         </Card.Body>
                                     </Card>
                                 </Col>
-                                <Col xs="4" md="4" className='mb-4'   >
+                                {/* <Col xs="4" md="4" className='mb-4'   >
 
                                     <Card style={{ height: '8rem' }} >
                                         <Card.Body className='card-body d-flex  align-items-center justify-content-center flex-column'>
@@ -112,8 +112,8 @@ const PanelInfoLockersDetalles = ({ lockerSelect, paquete, recargasYservicios }:
                                             <p>0</p>
                                         </Card.Body>
                                     </Card>
-                                </Col>
-                                <Col xs="4" md="4" className='mb-4' >
+                                </Col> */}
+                                <Col xs="6" md="6" className='mb-4' >
 
                                     <Card style={{ height: '8rem' }} >
                                         <Card.Body className='card-body d-flex  align-items-center justify-content-center flex-column'>
@@ -133,7 +133,7 @@ const PanelInfoLockersDetalles = ({ lockerSelect, paquete, recargasYservicios }:
                             <Card className='h-100'>
                                 <Card.Body className='d-flex justify-content-center align-items-center  flex-column h-100'>
                                     <p>Mi utilidad por mis lockers</p>
-                                    <p>$ {paquete.licenciatarioEarnings + recargasYservicios.recargasLicenciatarioEarnings + recargasYservicios.serviciosLicenciatarioEarnings }</p>
+                                    <p>$ {(paquete.licenciatarioEarnings + recargasYservicios.recargasLicenciatarioEarnings + recargasYservicios.serviciosLicenciatarioEarnings).toFixed(4) }</p>
                                 </Card.Body>
                             </Card>
                         </Col>
