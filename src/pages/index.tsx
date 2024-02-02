@@ -2,7 +2,6 @@
 import { auth, db } from "@/firebase";
 import styles from "@/styles/home.module.scss";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { Button, Card, Form } from "react-bootstrap";
 import { Bounce, ToastContainer, toast } from "react-toastify";
@@ -15,7 +14,6 @@ export default function Home() {
   const [passwordOne, setPasswordOne] = useState("");
   const [passwordTwo, setPasswordTwo] = useState("");
   const [name, setName] = useState("");
-  const router = useRouter();
   const [isRegister, setIsRegister] = useState(true);
 
   const showNotification = (message: string) => {
