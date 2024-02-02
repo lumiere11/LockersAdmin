@@ -77,7 +77,7 @@ export default function Dashboard() {
         const data: DocumentData = doc.data();
         dataArray.push(data);
       });
-      if (!dataArray) {
+      if (dataArray.length <= 0) {
         setModal(true);
         setErrorMessage("No tienes asignado ningun locker");
         return null;
@@ -115,7 +115,7 @@ export default function Dashboard() {
     try {
       const lockers = await getLockers();
       if (lockers === null || lockers === undefined) {
-        throw new Error("Error al traer los lockers");
+        throw new Error("No tienes un locker asignado");
         return;
       }
       lockers.forEach(async (item) => {
