@@ -188,7 +188,7 @@ export default function Dashboard() {
         setTotalEarnings(totalEarnings2);
         setEarnings([
           {
-            name: "Sin nombre",
+            name: "Valle Real",
             lockerId: item.locker_id,
             globalEarnings:
               recargasGlobalEarnings + serviciosGlobalEarnings + totalDagpacket,
