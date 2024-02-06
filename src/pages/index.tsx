@@ -10,6 +10,7 @@ import { Layout } from "../components/Layout";
 import { signIn } from "next-auth/react";
 import { doc, setDoc } from "firebase/firestore";
 import Link from "next/link";
+import Image from "next/image";
 export default function Home() {
   const [email, setEmail] = useState("");
   const [passwordOne, setPasswordOne] = useState("");
@@ -93,6 +94,12 @@ export default function Home() {
         <Card style={{ width: "25rem" }}>
           <Card.Body>
             <Card.Title>{isRegister ? "Registro" : "Ingresar"}</Card.Title>
+            <Image 
+              src={'/icon.svg'}
+              alt="logo"
+              width={400}
+              height={100}
+            />
             {isRegister ? (
               <Form onSubmit={onSubmit}>
                 <Form.Group className="mb-3" controlId="register.email">

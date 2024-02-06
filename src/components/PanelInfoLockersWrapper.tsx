@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setDate } from "@/features/dateSlice";
 import moment from "moment";
 import { RootState } from "@/store";
+import Image from "next/image";
 
 const PanelInfoLockersWrapper: React.FC<Props> = ({ children }) => {
   const [startDate, setStartDate] = useState(
@@ -34,7 +35,7 @@ const PanelInfoLockersWrapper: React.FC<Props> = ({ children }) => {
       <Col xs="2" md="3">
         <p>Historial</p>
         <div>
-          <Form >
+          <Form>
             <Form.Group controlId="dateInput">
               <Form.Label>Fecha de inicio</Form.Label>
               <Form.Control
@@ -62,11 +63,15 @@ const PanelInfoLockersWrapper: React.FC<Props> = ({ children }) => {
         </div>
       </Col>
       <Col xs="9" md="9">
+        <div className="d-flex  align-items-center justify-content-center">
+          <Image src={"/icon.svg"} alt="logo" width={400} height={100} />
+        </div>
         <p
           className={`d-flex  align-items-center justify-content-center ${styles.title}`}
         >
-          Dashboard inversionistas VIP (Multilocker)
+          Dashboard inversionistas
         </p>
+
         {/* <div className="d-flex justify-content-evenly">
           <p className={styles.name}>{user.name}</p>
           <p className={styles.lockers_number}>#{locker.number}</p>
