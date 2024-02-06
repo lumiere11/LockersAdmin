@@ -9,6 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Layout } from "../components/Layout";
 import { signIn } from "next-auth/react";
 import { doc, setDoc } from "firebase/firestore";
+import Link from "next/link";
 export default function Home() {
   const [email, setEmail] = useState("");
   const [passwordOne, setPasswordOne] = useState("");
@@ -162,6 +163,8 @@ export default function Home() {
                 <div className={styles.center}>
                   <Button type="submit">Ingresar</Button>
                 </div>
+                <Link className={styles.center} href="/restablecer-password">Olvide mi contraseña</Link>
+
               </Form>
             )}
 

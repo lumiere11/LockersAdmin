@@ -34,9 +34,7 @@ export default function Dashboard() {
     ServiciosYRecargas[]
   >([] as ServiciosYRecargas[]);
   const [paquetes, setPaquetes] = useState<Paquete[]>([] as Paquete[]);
-  const [selectedPaquete, setSelectedPaquete] = useState<Paquete>(
-    {} as Paquete
-  );
+  const [selectedPaquete, setSelectedPaquete] = useState<Paquete>({} as Paquete);
   const router = useRouter();
   const date = useSelector((state: RootState) => state.date);
   const session = useSession({
@@ -52,14 +50,23 @@ export default function Dashboard() {
     const selectedLocker2 = serviciosYRecargasEarnings.find(
       (item) => item.lockerId === lockerId
     );
+ 
     if (selectedLocker2) {
       setRecargasYServiciosProps(selectedLocker2);
     }
-    const selectedPaquete2 = paquetes.find(
+    const selectedPaquete2 = paquetes.filter(
       (item) => item.lockerId === lockerId
     );
     if (selectedPaquete2) {
-      setSelectedPaquete(selectedPaquete2);
+      const totalGlobalEarnings = paquetes.reduce((sum, paquete) => sum + paquete.globalEarnings, 0);
+      const totalLicenciatarioEarnings = paquetes.reduce((sum, paquete) => sum + paquete.licenciatarioEarnings, 0);
+      const paqueteInfo : Paquete = {
+        lockerId: paquetes[0].lockerId,
+        qty: paquetes[0].qty,
+        globalEarnings: totalGlobalEarnings,
+        licenciatarioEarnings: totalLicenciatarioEarnings
+      }
+      setSelectedPaquete(paqueteInfo);
     }
   };
   const lockerSelect = (isMain: boolean) => {
@@ -102,6 +109,7 @@ export default function Dashboard() {
         return {
           totalDagpacket: totalDagpacket ? totalDagpacket : 0,
           totalLicenciatario: totalLicenciatario ? totalLicenciatario : 0,
+          packetQty: data.length
         };
       } else {
         return { totalDagpacket: 0, totalLicenciatario: 0 };
@@ -118,6 +126,7 @@ export default function Dashboard() {
         throw new Error("No tienes un locker asignado");
         return;
       }
+      
       lockers.forEach(async (item) => {
         const packetsEarnings = await getPacketEarnings(item.locker_id);
         packetsEarnings
@@ -130,12 +139,11 @@ export default function Dashboard() {
           ? packetsEarnings?.totalLicenciatario
           : 0;
         setPaquetes([
-          ...paquetes,
           {
             globalEarnings: totalDagpacket,
             licenciatarioEarnings: totalLicenciatario,
             lockerId: item.locker_id,
-            qty: lockers.length,
+            qty: packetsEarnings?.packetQty ?? 0,
           },
         ]);
         const recargasYServiciosEarnings = await getRecargasYServiciosEarnings(
