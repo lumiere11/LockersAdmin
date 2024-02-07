@@ -32,7 +32,7 @@ const PanelInfoLockersWrapper: React.FC<Props> = ({ children }) => {
 
   return (
     <Row>
-      <Col xs="2" md="3">
+      <Col xs="12" md="3">
         <p>Historial</p>
         <div>
           <Form>
@@ -62,7 +62,7 @@ const PanelInfoLockersWrapper: React.FC<Props> = ({ children }) => {
           </Form>
         </div>
       </Col>
-      <Col xs="9" md="9">
+      <Col xs="12" md="9">
         <div className="d-flex  align-items-center justify-content-center">
           <Image src={"/icon.svg"} alt="logo" width={400} height={100} />
         </div>

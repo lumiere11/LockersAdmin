@@ -9,14 +9,14 @@ const PanelInfoLockers = ({ earnings,  totalLockersEarnings , lockerSelect }: IP
     return (
         <PanelInfoLockersWrapper>
             <Card>
-                <Card.Body>
+                <Card.Body className={`${styles['card-body-info']}`}>
                     <Row>
-                        <Col xs="8" md="8">
+                        <Col xs="12" md="8">
                             <Row>
                                 {
                                     earnings.map((item, index) => (
                                         <>
-                                            <Col xs="6" md="6" className={`mb-4 cursor-pointer ${styles.locker}`} onClick={() => lockerSelect(false, item.lockerId)}>
+                                            <Col xs="12" md="6" className={`mb-4 cursor-pointer ${styles.locker}`} onClick={() => lockerSelect(false, item.lockerId)}>
                                                 <Card>
                                                     <Card.Body className='card-body d-flex  align-items-center justify-content-center flex-column'>
                                                         <p>Locker {index + 1}</p>
@@ -34,7 +34,7 @@ const PanelInfoLockers = ({ earnings,  totalLockersEarnings , lockerSelect }: IP
                                                     </Card.Body>
                                                 </Card>
                                             </Col> */}
-                                            <Col xs="6" md="6" className='mb-4' >
+                                            <Col xs="12" md="6" className='mb-4' >
 
                                                 <Card>
                                                     <Card.Body className='card-body d-flex  align-items-center justify-content-center flex-column'>
@@ -48,7 +48,7 @@ const PanelInfoLockers = ({ earnings,  totalLockersEarnings , lockerSelect }: IP
                                 }
                             </Row>
                         </Col>
-                        <Col xs="4" md="4">
+                        <Col xs="12" md="4">
                             <Card className='h-100'>
                                 <Card.Body className='d-flex justify-content-center align-items-center  flex-column h-100'>
                                     <p>Mi utilidad por mis lockers</p>

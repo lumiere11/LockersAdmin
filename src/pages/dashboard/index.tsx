@@ -332,7 +332,7 @@ export default function Dashboard() {
     >
       {loading && <LoadingOverlay />}
       <div className="d-flex justify-end ">
-        <Button variant="secondary" onClick={handleLogout}>
+        <Button variant="secondary" onClick={handleLogout} className="mb-3">
           Cerrar sesión
         </Button>
       </div>
