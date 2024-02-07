@@ -78,8 +78,8 @@ const PanelInfoLockersWrapper: React.FC<Props> = ({ children }) => {
         </div> */}
         <div className="d-flex justify-content-center">
           <p className={styles.period}>
-            Periodo del {moment(startDate).format("DD-MM-YYYY")} al{" "}
-            {moment(endDate).format("DD-MM-YYYY")}{" "}
+            Periodo del {moment(dateStart).format("DD-MM-YYYY")} al{" "}
+            {moment(dateEnd).format("DD-MM-YYYY")}{" "}
           </p>
         </div>
         {children}
