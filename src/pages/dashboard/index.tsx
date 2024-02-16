@@ -18,6 +18,7 @@ import { ServiciosYRecargas } from "@/types/ServiciosYRecargas";
 import { Paquete } from "@/types/Paquetes";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
+import { getUbicacionLocker } from "@/services/LockerService";
 
 export default function Dashboard() {
   const [isMain, setIsMain] = useState(true);
@@ -96,13 +97,20 @@ export default function Dashboard() {
       setErrorMessage("No tienes asignado ningun locker");
     }
   };
-
+  const mapLockerToSucursal = (lockerId: string) =>{
+    if(lockerId == '1' ||  lockerId == '4'){
+      return '63hUV4X1zcNb7jboNgwIAYJi7sD2'
+    }else if(lockerId == '2' ||  lockerId == '3'){
+      return '3DH4KtVAhXaAEN8CFKh5zP6rdLr2';
+    }
+  }
   const getPacketEarnings = async (lockerId: string) => {
     try {
+      const userMapped = mapLockerToSucursal(lockerId);
       const data = await getPacketsEarnings(
-        lockerId,
         date.dateStart,
-        date.dateEnd
+        date.dateEnd,
+        userMapped
       );
       if (data) {
         const { totalDagpacket, totalLicenciatario } = packetLogic(data);
@@ -186,9 +194,10 @@ export default function Dashboard() {
           serviciosLicenciatarioEarnings +
           totalLicenciatario;
         setTotalEarnings(totalEarnings2);
+        const lockerName = await getUbicacionLocker(item.locker_id);
         setEarnings([
           {
-            name: "Valle Real",
+            name: lockerName?.name,
             lockerId: item.locker_id,
             globalEarnings:
               recargasGlobalEarnings + serviciosGlobalEarnings + totalDagpacket,

@@ -8,13 +8,13 @@ import {
 } from "firebase/firestore";
 
 export const getPacketsEarnings = async (
-  lockerId: string,
   firstDay: string,
-  lastDay: string
+  lastDay: string,
+  userId = ''
 ) => {
   const q = query(
     collection(db, "cotizaciones"),
-    where("lockerId", "==", lockerId),
+    where("hostUser_id", '==', userId),
     where("state", "==", "PAGADO"),
     where("created_at", ">=", new Date(firstDay)),
     where("created_at", "<=", new Date(lastDay))
