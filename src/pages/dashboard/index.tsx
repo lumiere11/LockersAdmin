@@ -178,7 +178,6 @@ export default function Dashboard() {
           ? recargasYServiciosEarnings?.qty
           : 0;
         setServiciosYRecargasEarnings([
-          ...serviciosYRecargasEarnings,
           {
             lockerId: item.locker_id,
             recargasGlobalEarnings,
@@ -242,6 +241,7 @@ export default function Dashboard() {
     };
   };
   const packetLogic = (data: DocumentData[]) => {
+    
     const totalLicenciatario = data.reduce((accumulator, currentValue) => {
       const costo = currentValue.costo
       const originalEnvioValue =  currentValue.originalEnvioValue
@@ -332,10 +332,10 @@ export default function Dashboard() {
   };
 
   useEffect(() => {
-    if (session.status === "authenticated") {
+    if (session.status === "authenticated") {      
       effect();
     }
-  }, [session, date]);
+  }, [date, session.status]);
   return (
     <Layout
       pageDescription="Home - Lockers"
