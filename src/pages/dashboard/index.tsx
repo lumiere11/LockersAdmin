@@ -242,12 +242,15 @@ export default function Dashboard() {
     };
   };
   const packetLogic = (data: DocumentData[]) => {
-    console.log(data);
     const totalLicenciatario = data.reduce((accumulator, currentValue) => {
-      const costoBruto = currentValue.costo * 0.95;
-      const utilidadBruta = currentValue.shippingValue - costoBruto;
-      const utilidadLic = utilidadBruta * 0.4;
-      return accumulator + utilidadLic;
+      const costo = currentValue.costo
+      const originalEnvioValue =  currentValue.originalEnvioValue
+      const cardFee = costo * 0.05
+      const totalCostOfPackage = cardFee + costo
+
+      const utility = originalEnvioValue - totalCostOfPackage;
+      const utilidadLic = utility * 0.4;
+      return accumulator + Number(utilidadLic.toFixed(2));
     }, 0);
 
     const totalDagpacket = data.reduce((accumulator, currentValue) => {
