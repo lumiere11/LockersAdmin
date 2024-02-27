@@ -36,7 +36,7 @@ const PanelInfoLockersDetalles = ({
                   <Card>
                     <Card.Body className="card-body d-flex  align-items-center justify-content-center flex-column">
                       <p>Mi utilidad</p>
-                      <p>${paquete.licenciatarioEarnings.toFixed(4)}</p>
+                      <p>${paquete.licenciatarioEarnings.toFixed(2)}</p>
                     </Card.Body>
                   </Card>
                 </Col>
@@ -66,7 +66,7 @@ const PanelInfoLockersDetalles = ({
                         {(
                           recargasYservicios.recargasLicenciatarioEarnings +
                           recargasYservicios.serviciosLicenciatarioEarnings
-                        ).toFixed(4)}
+                        ).toFixed(2)}
                       </p>
                     </Card.Body>
                   </Card>
@@ -134,7 +134,7 @@ const PanelInfoLockersDetalles = ({
                       paquete.licenciatarioEarnings +
                       recargasYservicios.recargasLicenciatarioEarnings +
                       recargasYservicios.serviciosLicenciatarioEarnings
-                    ).toFixed(4)}
+                    ).toFixed(2)}
                   </p>
                 </Card.Body>
               </Card>

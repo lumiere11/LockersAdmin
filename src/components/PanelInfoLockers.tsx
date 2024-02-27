@@ -39,7 +39,7 @@ const PanelInfoLockers = ({ earnings,  totalLockersEarnings , lockerSelect }: IP
                                                 <Card>
                                                     <Card.Body className='card-body d-flex  align-items-center justify-content-center flex-column'>
                                                         <p>Mi utilidad</p>
-                                                        <p>${item.licenciatarioEarnings.toFixed(4)} </p>
+                                                        <p>${item.licenciatarioEarnings.toFixed(2)} </p>
                                                     </Card.Body>
                                                 </Card>
                                             </Col>
@@ -52,7 +52,7 @@ const PanelInfoLockers = ({ earnings,  totalLockersEarnings , lockerSelect }: IP
                             <Card className='h-100'>
                                 <Card.Body className='d-flex justify-content-center align-items-center  flex-column h-100'>
                                     <p>Mi utilidad por mis lockers</p>
-                                    <p>$ {totalLockersEarnings.toFixed(4)}</p>
+                                    <p>$ {totalLockersEarnings.toFixed(2)}</p>
                                 </Card.Body>
                             </Card>
                         </Col>
