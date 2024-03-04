@@ -19,12 +19,15 @@ export const getPacketsEarnings = async (
     where("created_at", ">=", new Date(firstDay)),
     where("created_at", "<=", new Date(lastDay))
   );
+  console.log(firstDay)
+  
   const querySnapshot = await getDocs(q);
   const dataArray: DocumentData[] = [];
   querySnapshot.forEach((doc) => {
     const data: DocumentData = doc.data();
     dataArray.push(data);
   });
+  console.log(dataArray)
   if (!dataArray) {
     return [];
   }

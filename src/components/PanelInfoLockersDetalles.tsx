@@ -2,6 +2,7 @@ import React from "react";
 import PanelInfoLockersWrapper from "./PanelInfoLockersWrapper";
 import { Button, Card, Col, Row } from "react-bootstrap";
 import { PanelDetallesLocker } from "@/types/PanelDetallesLocker";
+import Link from "next/link";
 
 const PanelInfoLockersDetalles = ({
   lockerSelect,
@@ -127,7 +128,9 @@ const PanelInfoLockersDetalles = ({
             <Col xs="12" md="4">
               <Card className="h-100">
                 <Card.Body className="d-flex justify-content-center align-items-center  flex-column h-100">
-                  <p>Mi utilidad por mis lockers</p>
+                  <Link href={'/dashboard/details'}>
+                    <p>Mi utilidad por mis lockers</p>
+                  </Link>
                   <p>
                     ${" "}
                     {(
