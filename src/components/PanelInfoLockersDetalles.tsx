@@ -19,8 +19,10 @@ const PanelInfoLockersDetalles = ({
                 <Col xs="6" md="6" className="mb-4">
                   <Card>
                     <Card.Body className="card-body d-flex  align-items-center justify-content-center flex-column">
-                      <p>Paquetes </p>
-                      <p>{paquete.qty}</p>
+                      <Link href="/dashboard/details">
+                        <p>Paquetes </p>
+                        <p>{paquete.qty}</p>
+                      </Link>
                     </Card.Body>
                   </Card>
                 </Col>
@@ -128,9 +130,7 @@ const PanelInfoLockersDetalles = ({
             <Col xs="12" md="4">
               <Card className="h-100">
                 <Card.Body className="d-flex justify-content-center align-items-center  flex-column h-100">
-                  <Link href={'/dashboard/details'}>
                     <p>Mi utilidad por mis lockers</p>
-                  </Link>
                   <p>
                     ${" "}
                     {(
