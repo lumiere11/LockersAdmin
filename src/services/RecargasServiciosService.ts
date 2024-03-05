@@ -1,4 +1,4 @@
-import { db } from "@/firebase";
+import { db } from "@/firebase.prod";
 import { DocumentData, collection, getDocs, query, where } from "firebase/firestore";
 
 export const getServiciosRecargas = async (lockerId: string,  firstDay: string, lastDay: string) => {

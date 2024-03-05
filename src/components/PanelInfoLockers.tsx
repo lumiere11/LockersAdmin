@@ -5,7 +5,6 @@ import PanelInfoLockersWrapper from './PanelInfoLockersWrapper';
 import { PanelInfoLockers as IPanelInfoLockers} from '@/types/PanelInfoLockers';
 
 const PanelInfoLockers = ({ earnings,  totalLockersEarnings , lockerSelect }: IPanelInfoLockers) => {
-
     return (
         <PanelInfoLockersWrapper>
             <Card>

@@ -1,4 +1,4 @@
-import { db } from "@/firebase";
+import { db } from "@/firebase.prod";
 import { collection, getDocs, limit, query, where } from "firebase/firestore";
 
 export const getUbicacionLocker = async(lockerId :string ) => {

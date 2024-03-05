@@ -1,5 +1,5 @@
 import { Layout } from "@/components/Layout";
-import { auth } from "@/firebase";
+import { auth } from "@/firebase.prod";
 import { sendPasswordResetEmail } from "firebase/auth";
 import React, { useState } from "react";
 import { Button, Card, Form } from "react-bootstrap";

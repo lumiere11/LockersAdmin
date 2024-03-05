@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { auth, db } from "@/firebase";
+import { auth, db } from "@/firebase.prod";
 import styles from "@/styles/home.module.scss";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";

@@ -7,14 +7,13 @@ import { getAuth } from "firebase/auth";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyBYY2zLOaO0RWHUWQ7U1OQYOJbk9CB6vTg",
-  authDomain: "dagpacket-plataforma.firebaseapp.com",
-  databaseURL: "https://dagpacket-plataforma-default-rtdb.firebaseio.com",
-  projectId: "dagpacket-plataforma",
-  storageBucket: "dagpacket-plataforma.appspot.com",
-  messagingSenderId: "628490033893",
-  appId: "1:628490033893:web:79f6ec5ff811f54235d20c",
-  measurementId: "G-Q5CY6K4Q92"
+  apiKey: "AIzaSyC6cqIm3KHqB4BaSilCQQiIat_gli7AbDM",
+  authDomain: "nuevadagpacket.firebaseapp.com",
+  projectId: "nuevadagpacket",
+  storageBucket: "nuevadagpacket.appspot.com",
+  messagingSenderId: "47925489505",
+  appId: "1:47925489505:web:e263b84cd870d780dcdf20",
+  measurementId: "G-WPH86N0VSB"
 };
 
 const app = getApps().length ? getApp() : initializeApp(firebaseConfig)

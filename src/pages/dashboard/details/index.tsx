@@ -3,13 +3,14 @@ import { collection, query, where, getDocs } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { Button, Container, Table } from "react-bootstrap";
 import { DocumentData } from "firebase/firestore";
-import { db } from "@/firebase";
+import { db } from "@/firebase.prod";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { getPacketsEarnings } from "@/services/PaquetesServices";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import Link from "next/link";
+import { mapLockerToSucursal } from "@/utils";
 
 export default function Details() {
   const [loading, setLoading] = useState(true);
@@ -27,27 +28,58 @@ export default function Details() {
   });
   const getLockers = async () => {
     try {
+      const q = query(
+        collection(db, "users_lockers"),
+        where("user_id", "==", session?.data?.uid)
+      );
+      const querySnapshot = await getDocs(q);
+      const dataArray: DocumentData[] = [];
+      querySnapshot.forEach((doc) => {
+        const data: DocumentData = doc.data();
+        dataArray.push(data);
+      });
+      if (dataArray.length <= 0) {
+        setModal(true);
+        setErrorMessage("No tienes asignado ningun locker");
+        return null;
+      }
+
+      return dataArray;
+    } catch (error) {
+      setModal(true);
+      setErrorMessage("No tienes asignado ningun locker");
+    }
+  };
+  const effect = async () => {
+    try {
       console.log(session?.data?.uid);
+      const lockers = await getLockers();
+      if (lockers === null || lockers === undefined) {
+        throw new Error("No tienes un locker asignado");
+        return;
+      }
+      
       const cotizacionesResponse = await getPacketsEarnings(
         date.dateStart,
         date.dateEnd,
-        session?.data?.uid
+        mapLockerToSucursal(lockers[0].locker_id)
       );
-      console.log(cotizacionesResponse);
+      console.log(lockers[0].locker_id);
       setCotizaciones(cotizacionesResponse);
     } catch (error) {
       setModal(true);
       setErrorMessage("No tienes asignado ningun locker");
     }
   };
-  useEffect(() => {
-    getLockers();
-  }, []);
+
   useEffect(() => {
     if (session.status === "authenticated") {
-      getLockers();
+      effect();
     }
   }, [date, session.status]);
+  const convertDate = (seconds: number, nanoseconds: number) => {
+    return new Date(seconds * 1000 + nanoseconds / 1000000).toLocaleString();
+  };
   return (
     <Layout
       pageDescription="Home - Detalles"
@@ -74,12 +106,24 @@ export default function Details() {
           <tbody>
             {cotizaciones?.map((item) => (
               <tr key={item.docId}>
-                <td>{item.created_at}</td>
-                <td>{item.originalEnvioValue}</td>
-                <td>{item.costo}</td>
-                <td>{Number(item.originalEnvioValue) - Number(item.costo)}</td>
                 <td>
-                  {(Number(item.originalEnvioValue) - Number(item.costo)) * 0.4}
+                  {convertDate(
+                    item.created_at.seconds,
+                    item.created_at.seconds
+                  )}
+                </td>
+                <td>{Number(item.originalEnvioValue).toFixed(2)}</td>
+                <td>{Number(item.costo).toFixed(2)}</td>
+                <td>
+                  {(
+                    Number(item.originalEnvioValue) - Number(item.costo)
+                  ).toFixed(2)}
+                </td>
+                <td>
+                  {(
+                    (Number(item.originalEnvioValue) - Number(item.costo)) *
+                    0.4
+                  ).toFixed(2)}
                 </td>
                 <td>{item.rate_provider}</td>
                 <td>Guadalajara</td>

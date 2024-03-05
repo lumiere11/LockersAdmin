@@ -8,7 +8,7 @@ import PanelInfoLockersDetalles from "../../components/PanelInfoLockersDetalles"
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { signOut, useSession } from "next-auth/react";
-import { db } from "@/firebase";
+import { db } from "@/firebase.prod";
 import LoadingOverlay from "../../components/LoadingOverlay";
 import { getPacketsEarnings } from "@/services/PaquetesServices";
 import { getServiciosRecargas } from "@/services/RecargasServiciosService";
@@ -112,6 +112,7 @@ export default function Dashboard() {
         date.dateEnd,
         userMapped
       );
+
       if (data) {
         const { totalDagpacket, totalLicenciatario } = packetLogic(data);
         return {
@@ -241,25 +242,25 @@ export default function Dashboard() {
     };
   };
   const packetLogic = (data: DocumentData[]) => {
-    
-    const totalLicenciatario = data.reduce((accumulator, currentValue) => {
-      const costo = currentValue.costo
-      const originalEnvioValue =  currentValue.originalEnvioValue
-      const cardFee = costo * 0.05
-      const totalCostOfPackage = cardFee + costo
+      const totalLicenciatario = data.reduce((accumulator, currentValue) => {
+        const costo = currentValue.costo
+        const originalEnvioValue =  currentValue.originalEnvioValue
+        const cardFee = costo * 0.05
+        const totalCostOfPackage = cardFee + costo
+  
+        const utility = originalEnvioValue - totalCostOfPackage;
+        const utilidadLic = utility * 0.4;
+  
+        return accumulator + Number(utilidadLic.toFixed(2));
+      }, 0);
+      const totalDagpacket = data.reduce((accumulator, currentValue) => {
+        const costoBruto = currentValue.costo * 0.95;
+        const utilidadBruta = currentValue.shippingValue - costoBruto;
+        const utilidadDag = utilidadBruta * 0.6;
+        return accumulator + utilidadDag;
+      }, 0);
+      return { totalDagpacket, totalLicenciatario };
 
-      const utility = originalEnvioValue - totalCostOfPackage;
-      const utilidadLic = utility * 0.4;
-      return accumulator + Number(utilidadLic.toFixed(2));
-    }, 0);
-
-    const totalDagpacket = data.reduce((accumulator, currentValue) => {
-      const costoBruto = currentValue.costo * 0.95;
-      const utilidadBruta = currentValue.shippingValue - costoBruto;
-      const utilidadDag = utilidadBruta * 0.6;
-      return accumulator + utilidadDag;
-    }, 0);
-    return { totalDagpacket, totalLicenciatario };
   };
 
   const getRecargasYServiciosEarnings = async (lockerId: string) => {
