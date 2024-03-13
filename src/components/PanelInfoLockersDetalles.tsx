@@ -19,7 +19,7 @@ const PanelInfoLockersDetalles = ({
                 <Col xs="6" md="6" className="mb-4">
                   <Card>
                     <Card.Body className="card-body d-flex  align-items-center justify-content-center flex-column">
-                      <Link href="/dashboard/details">
+                      <Link href="/dashboard/details" className="text-center">
                         <p>Paquetes </p>
                         <p>{paquete.qty}</p>
                       </Link>
