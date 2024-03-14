@@ -12,7 +12,7 @@ import { RootState } from "@/store";
 import Link from "next/link";
 import { mapLockerToSucursal } from "@/utils";
 import * as XLSX from "xlsx";
-
+const lockerNames = ["Mind", "Andares", "Plaza del Sol", "Valle Real"];
 export default function Details() {
   const [loading, setLoading] = useState(true);
   const [modal, setModal] = useState(false);
@@ -20,7 +20,7 @@ export default function Details() {
   const [cotizaciones, setCotizaciones] = useState<DocumentData[]>();
   const router = useRouter();
   const date = useSelector((state: RootState) => state.date);
-
+  const [lockerName, setLockerName] = useState("");
   const session = useSession({
     required: true,
     onUnauthenticated() {
@@ -66,6 +66,10 @@ export default function Details() {
         mapLockerToSucursal(lockers[0].locker_id)
       );
       console.log(lockers[0].locker_id);
+      if (!lockers[0].locker_id) {
+        return;
+      }
+      setLockerName(lockerNames[lockers[0].locker_id - 1]);
       setCotizaciones(cotizacionesResponse);
     } catch (error) {
       setModal(true);
@@ -109,7 +113,22 @@ export default function Details() {
     if (!excelArrayBody || excelArrayBody?.length < 0) {
       return null;
     }
-    return [excelArrayHeader, ...excelArrayBody];
+    const lockerInfo = [
+      "Nombre de locker",
+      lockerName,
+      "Periodo",
+      `${date.dateStart} - ${date.dateEnd}`,
+      "",
+      "",
+      "",
+      "",
+    ];
+
+    const totalMonth = cotizaciones?.reduce((acc, curr) => {
+      return acc + (Number(curr.originalEnvioValue) - Number(curr.costo)) * 0.4;
+    }, 0);
+    const lockerTotalMonth = ["", "", "", "Total", totalMonth, "", "", ""];
+    return [lockerInfo, excelArrayHeader, ...excelArrayBody, lockerTotalMonth];
   };
   const handleConverToExcel = () => {
     const excelArray = convertToExcelArray();
@@ -118,8 +137,33 @@ export default function Details() {
     }
     const wb = XLSX.utils.book_new();
     const ws = XLSX.utils.aoa_to_sheet(excelArray);
+    ws["A1"].s = { font: { bold: true } };
+    ws["C1"].s = { font: { bold: true } };
+
+    ws["!cols"] = [
+      { wch: 20 }, // Ancho de la primera columna
+      { wch: 10 }, // Ancho de la segunda columna
+      { wch: 20 }, // Ancho de la primera columna
+      { wch: 20 }, // Ancho de la primera columna
+      { wch: 20 }, // Ancho de la primera columna
+    ];
+    const colNum = XLSX.utils.decode_col("E"); //decode_col converts Excel col name to an integer for col #
+
+    const fmt = "$0.00";
+    /* get worksheet range */
+    const  range = XLSX.utils.decode_range(ws["!ref"]);
+    for (let i = range.s.r + 1; i <= range.e.r; ++i) {
+      /* find the data cell (range.s.r + 1 skips the header row of the worksheet) */
+      const ref = XLSX.utils.encode_cell({ r: i, c: colNum });
+      /* if the particular row did not contain data for the column, the cell will not be generated */
+      if (!ws[ref]) continue;
+      /* `.t == "n"` for number cells */
+      if (ws[ref].t != "n") continue;
+      /* assign the `.z` number format */
+      ws[ref].z = fmt;
+    }
     XLSX.utils.book_append_sheet(wb, ws, "Paquetes");
-    XLSX.writeFile(wb, `${Date.now()}.xlsx`);
+    XLSX.writeFile(wb, `${Date.now()}.xlsx`, { cellStyles: true });
   };
   return (
     <Layout
